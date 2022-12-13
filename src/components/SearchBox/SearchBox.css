@@ -39,3 +39,40 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+
+@media (max-width: 705px){
+    .search-box__form {
+        width: 35vw;
+        margin: 0;
+
+    }
+
+    .search-box__form-input{
+        width: 50vw;
+    }
+}
+
+@media (max-width:470px) {
+    .search-box__form-input{
+        width: 100%;
+        min-width: 192px;
+    }
+    .search-box__form{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-box__form-label{
+        margin: 0;
+        width: 100%;
+    }
+
+    .search-box__form-submit{
+        width: 100%;
+    }
+}
