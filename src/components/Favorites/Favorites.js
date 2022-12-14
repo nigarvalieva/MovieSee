@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import {addToFavourites} from "../../redux/actions";
 import './Favorites.css';
+
+
 class Favorites extends Component {
-    state = {
-        title: 'Новый список',
-        movies: [
-            { imdbID: 'tt0068646', title: 'The Godfather', year: 1972 }
-        ]
-    }
     render() { 
         return (
             <div className="favorites">
                 <input placeholder="Новый список" className="favorites__name" />
                 <ul className="favorites__list">
-                    {this.state.movies.map((item) => {
-                        return <li key={item.imdbID}>{item.title} ({item.year})</li>;
+                    {this.props.favorites.map((item) => {
+                        return <li key={item.imdbID}>{item.Title} ({item.Year}) <button className="deletefav">X</button></li>;
                     })}
                 </ul>
                 <button type="button" className="favorites__save">Сохранить список</button>
@@ -21,5 +19,11 @@ class Favorites extends Component {
         );
     }
 }
- 
-export default Favorites;
+
+const mapStateToProps = (state) => {
+    return {
+      favorites: state.favorites,
+    };
+  };
+
+export default connect(mapStateToProps)(Favorites);
