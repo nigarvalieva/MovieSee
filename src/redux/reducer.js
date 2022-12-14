@@ -21,6 +21,20 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 movies,
             }
+        case "REMOVE_FROM_FAVOURITES":
+            let favList = [...state.favorites];
+
+            let deleted = state.favList.find(
+              (item) => item.imdbID === action.payload.id
+            );
+
+            let index = state.favList.indexOf(deleted);
+            favList.splice(index, 1);
+            state.favorites = [...favList]
+            return {
+              ...state,
+              favorites,
+            }; 
         default:
             return state;
     }

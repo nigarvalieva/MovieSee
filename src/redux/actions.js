@@ -15,3 +15,12 @@ export function searchMovie(movie) {
         }
     }
 }
+
+export function removeFromFavourites(id) {
+    return {
+        type: "REMOVE_FROM_FAVOURITES",
+        payload: {
+            id: id,
+        },
+    };
+}
