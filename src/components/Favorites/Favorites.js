@@ -5,7 +5,6 @@ import "./Favorites.css";
 
 class Favorites extends Component {
   render() {
-    console.log(this.props.favorites);
     return (
       <div className="favorites">
         <input placeholder="Новый список" className="favorites__name" />
