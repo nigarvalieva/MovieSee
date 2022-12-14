@@ -39,14 +39,14 @@
     justify-content: space-between;
 }
 
-.delete_fav-btn{
+.deletefav{
     width: 25px;
     background-color: #496DDB;
     border: 1px solid white;
     color: white;
 }
 
-.delete_fav-btn:hover{
+.deletefav:hover{
     background-color: #8197da;
 }
 
