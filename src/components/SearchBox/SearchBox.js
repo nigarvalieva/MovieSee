@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { searchMovie } from '../../redux/actions';
 import './SearchBox.css';
+import { searchMovie } from '../../redux/actions';
 
-class SearchBox extends React.Component {
+class SearchBox extends Component {
     state = {
         searchLine: ''
     }
@@ -20,6 +20,7 @@ class SearchBox extends React.Component {
     }
     render() {
         const { searchLine } = this.state;
+
         return (
             <div className="search-box">
                 <form className="search-box__form" onSubmit={this.searchBoxSubmitHandler}>

@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { removeFromFavourites } from "../../redux/actions";
+import { deleteFromFavourites } from "../../redux/actions";
 import "./Favorites.css";
-
-const mapStateToProps = (state) => {
-  return {
-    favorites: state.favorites,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  removeFromFavorites: (id) => dispatch(removeFromFavourites(id)),
-});
 
 class Favorites extends Component {
   render() {
@@ -27,7 +17,7 @@ class Favorites extends Component {
                 <button
                   className="deletefav"
                   onClick={() => {
-                    this.props.removeFromFavorites(item.imdbID);
+                    this.props.deleteFromFavourites(item.imdbID);
                   }}
                 >
                   X
@@ -43,5 +33,15 @@ class Favorites extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    favorites: state.favorites,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteFromFavourites: (id) => dispatch(deleteFromFavourites(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
