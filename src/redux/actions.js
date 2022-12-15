@@ -24,3 +24,12 @@ export function deleteFromFavourites(id) {
         },
     };
 }
+
+export function setId(id){
+    return{
+        type:"SET",
+        payload:{
+            id: id
+        }
+    };
+}

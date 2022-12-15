@@ -1,9 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { deleteFromFavourites } from "../../redux/actions";
+import { deleteFromFavourites, setId } from "../../redux/actions";
 import "./Favorites.css";
 
 class Favorites extends Component {
+  clickHandler() {
+    let list = {
+      title: document.querySelector(".favorites__name").value,
+      movies: this.props.favorites,
+    };
+
+    fetch("https://acb-api.algoritmika.org/api/movies/list/", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(list),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.id);
+        this.props.setId(data.id);
+      })
+      .catch((err) => console.log(err));
+    document.querySelector(".favorites__save").textContent = "Идет запрос";
+    setTimeout(() => {
+      document.querySelector(".favorites__save").remove();
+      document.querySelector(".ssilka").style.display = 'block'
+    }, 1000);
+  }
   render() {
     return (
       <div className="favorites">
@@ -25,8 +50,9 @@ class Favorites extends Component {
             );
           })}
         </ul>
-        <button type="button"
-         className={(this.props.favorites.length!==0  && (document.querySelector(".favorites__name").value!==""))===true ? "favorites__save" : "favorites__save_dis"} disabled>
+        <button type="button" 
+          className="favorites__save" onClick={() => {
+            this.clickHandler()}}>
           Сохранить список
         </button>
       </div>
@@ -36,11 +62,13 @@ class Favorites extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    favorites: state.favorites,
+    idPost: state.id,
+    favorites: state.favorites
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  setId: (id) => dispatch(setId(id)),
   deleteFromFavourites: (id) => dispatch(deleteFromFavourites(id)),
 });
 

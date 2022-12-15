@@ -1,4 +1,5 @@
 const initialState = {
+    id: null,
     favorites: [],
     movies: [],
 };
@@ -31,7 +32,12 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 favorites,
             };
+        case "SET":
+            return {
+                ...state,
+                id: action.payload.id,
+            }
         default:
             return state;
-        }
+    }
 }
