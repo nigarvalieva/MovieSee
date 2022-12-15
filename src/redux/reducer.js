@@ -2,6 +2,7 @@ const initialState = {
     id: null,
     favorites: [],
     movies: [],
+    listArr: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -36,6 +37,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 id: action.payload.id,
+            }
+        case ("DO_LIST"):
+            return {
+                ...state,
+                listArr: action.payload.data
             }
         default:
             return state;

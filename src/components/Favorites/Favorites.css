@@ -77,6 +77,10 @@
     }
 }
 
+.link {
+    display: none;
+}
+
 @media (max-width: 470px) {
     .favorites{
         width: 100vw;

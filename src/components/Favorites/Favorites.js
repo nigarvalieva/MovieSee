@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { deleteFromFavourites, setId } from "../../redux/actions";
+import { setId, deleteFromFavourites, makeDisabled } from "../../redux/actions";
 import "./Favorites.css";
+import { Link } from "react-router-dom";
 
 class Favorites extends Component {
   clickHandler() {
@@ -23,12 +24,13 @@ class Favorites extends Component {
         this.props.setId(data.id);
       })
       .catch((err) => console.log(err));
-    document.querySelector(".favorites__save").textContent = "Идет запрос";
+    document.querySelector(".favorites__save").textContent = "Загрузка...";
     setTimeout(() => {
       document.querySelector(".favorites__save").remove();
-      document.querySelector(".ssilka").style.display = 'block'
-    }, 1000);
+      document.querySelector(".link").style.display = 'block'
+    }, 500);
   }
+
   render() {
     return (
       <div className="favorites">
@@ -40,21 +42,27 @@ class Favorites extends Component {
                 {item.Title} ({item.Year})
                 <button
                   className="deletefav"
-                  onClick={() => {
-                    this.props.deleteFromFavourites(item.imdbID);
-                  }}
-                >
+                  onClick={() => { this.props.deleteFromFavorites(item.imdbID);}}>
                   X
                 </button>
               </li>
             );
           })}
         </ul>
-        <button type="button" 
-          className="favorites__save" onClick={() => {
-            this.clickHandler()}}>
+        <button
+          type="button"
+          className="favorites__save"
+          onClick={() => {
+            this.clickHandler();
+            document.querySelector(".favorites__save").disabled=false
+          }}
+          disabled
+          >
           Сохранить список
         </button>
+        <Link className="link" to={`/list/${this.props.idPost}`}>
+          Перейти к списку
+        </Link>
       </div>
     );
   }
@@ -62,14 +70,15 @@ class Favorites extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    favorites: state.favorites,
     idPost: state.id,
-    favorites: state.favorites
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  deleteFromFavorites: (id) => dispatch(deleteFromFavourites(id)),
   setId: (id) => dispatch(setId(id)),
-  deleteFromFavourites: (id) => dispatch(deleteFromFavourites(id)),
 });
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

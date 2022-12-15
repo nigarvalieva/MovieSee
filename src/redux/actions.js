@@ -11,7 +11,7 @@ export function searchMovie(movie) {
     return {
         type: "SEARCH_MOVIE",
         payload: {
-           movie: movie,
+            movie: movie,
         }
     }
 }
@@ -25,11 +25,20 @@ export function deleteFromFavourites(id) {
     };
 }
 
-export function setId(id){
-    return{
-        type:"SET",
-        payload:{
+export function setId(id) {
+    return {
+        type: "SET",
+        payload: {
             id: id
         }
     };
+}
+
+export function doList(data) {
+    return {
+        type: "DO_LIST",
+        payload: {
+            data: data
+        }
+    }
 }
