@@ -14,6 +14,7 @@ class MovieItem extends Component {
                     <button type="button" className="movie-item__add-button"
                      onClick={(e) => {this.props.addToFavourites(imdbID);
                          e.target.disabled=true;
+                         document.querySelector(".favorites__save").disabled=false
                         }}
                       disabled={false}>
                         Добавить в список

@@ -26,6 +26,16 @@
     transition: all 0.2s linear;
 }
 
+.favorites__save_dis{
+    border: none;
+    background-color: #496DDB;
+    padding: 10px 15px;
+    color: #FFEEDB;
+    font-size: 14px;
+    transition: all 0.2s linear;
+    cursor: not-allowed;
+}
+
 .favorites__save:hover {
     cursor: pointer;
     opacity: 0.9;

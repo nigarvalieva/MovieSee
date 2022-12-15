@@ -25,7 +25,8 @@ class Favorites extends Component {
             );
           })}
         </ul>
-        <button type="button" className="favorites__save">
+        <button type="button"
+         className={(this.props.favorites.length!==0  && (document.querySelector(".favorites__name").value!==""))===true ? "favorites__save" : "favorites__save_dis"} disabled>
           Сохранить список
         </button>
       </div>
