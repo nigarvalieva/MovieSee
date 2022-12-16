@@ -6,11 +6,11 @@ class Header extends Component {
         return (
             <header className="header">
                 <h1 className="header__title">
-                    MustSee
+                    kikiSearch
                 </h1>
             </header>
         );
     }
 }
- 
+
 export default Header;

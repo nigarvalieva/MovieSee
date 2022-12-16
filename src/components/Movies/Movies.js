@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
 import MovieItem from '../MovieItem/MovieItem';
-import { connect } from "react-redux";
 import './Movies.css';
+import store from '../../redux/store';
 
 class Movies extends Component {
+    state = { 
+        movies: [],
+    }
+
+    componentDidMount() {
+        store.subscribe(() => {
+            const storeState = store.getState();
+            const { movies } = storeState;
+            this.setState({ movies });
+            console.log(movies);
+        })
+    }
 
     render() { 
-        if(this.props.movies.length === 0) 
-            return true;
-        
         return ( 
             <ul className="movies">
-                {this.props.movies.map((movie) => (
+                {this.state.movies.map((movie) => (
                     <li className="movies__item" key={movie.imdbID}>
-                        <MovieItem {...movie} />
+                        <MovieItem { ...movie } />
                     </li>
                 ))}
             </ul>
         );
     }
-}
+};
 
-const mapStateToProps = (state) => {
-    return {
-      movies: state.movies,
-    };
-  };
-  
-export default connect(mapStateToProps)(Movies);
+export default Movies;
+

@@ -1,44 +1,42 @@
-export function addToFavourites(id) {
-    return {
-        type: "ADD_TO_FAVOURITES",
-        payload: {
-            id: id,
-        },
-    };
-}
+const ARRAY_MOVIE = "ARRAY_MOVIE";
+const ASIDE = "ASIDE";
+const LIST = "LIST";
+const DELETE_ITEM = 'DELETE_ITEM'
 
-export function searchMovie(movie) {
+function addMovies(array) {
     return {
-        type: "SEARCH_MOVIE",
+        type: ARRAY_MOVIE,
         payload: {
-            movie: movie,
+            array
         }
     }
 }
 
-export function deleteFromFavourites(id) {
+function aside(obj) {
     return {
-        type: "DELETE_FROM_FAVOURITES",
+        type: ASIDE,
         payload: {
-            id: id,
-        },
-    };
-}
-
-export function setId(id) {
-    return {
-        type: "SET",
-        payload: {
-            id: id
-        }
-    };
-}
-
-export function doList(data) {
-    return {
-        type: "DO_LIST",
-        payload: {
-            data: data
+            obj
         }
     }
 }
+
+function addList(id) {
+    return {
+        type: LIST,
+        payload: {
+            id
+        }
+    }
+}
+
+function deleteItem(index) {
+    return {
+        type: DELETE_ITEM,
+        payload: {
+            index
+        }
+    }
+}
+
+export { ARRAY_MOVIE, ASIDE, LIST, DELETE_ITEM, addMovies, aside, addList, deleteItem };

@@ -1,57 +1,62 @@
-import React, { Component } from "react";
-import "./ListPage.css";
-import { connect } from "react-redux";
-import { doList } from "../../redux/actions";
+import React, { Component } from 'react';
+import './ListPage.css';
+import store from '../../redux/store';
+import {connect} from 'react-redux'
 
 class ListPage extends Component {
-  state = {
-    title: ""
-  };
-  componentDidMount() {
-    const id = this.props.match.params;
-    console.log(id);
-    fetch(
-      `https://acb-api.algoritmika.org/api/movies/list/${this.props.id}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({title: data.title});
-        this.props.makeList(data.movies);
-        console.log(this.props.listArr);
-      });
-  }
-  render() {
-    return (
-      <div className="list-page">
-        <h1 className="list-page__title">{this.state.title}</h1>
-        <ul>
-          {this.props.listArr.map((item) => {
-            return (
-              <li key={item.imdbID}>
-                <a
-                  href={`https://www.imdb.com/title/${item.imdbID}/`}
-                  target="_blank" ref="noreferrer"
-                >
-                  {item.Title} ({item.Year})
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
+    state = {
+        id: '',
+        movies: [],
+        title: ""
+    }
+
+    loadFilms = async () => {
+        const res = await fetch(`https://acb-api.algoritmika.org/api/movies/list/${this.props.id}`)
+        const {movies, title} = await res.json()
+        this.setState({title})
+        movies.forEach(item => {
+            fetch(`http://www.omdbapi.com/?i=${item}&apikey=a6408ff1`)
+            .then(res => res.json())
+            .then(data => {
+                const objForPush = {
+                    Title: data.Title,
+                    Year: data.Year,
+                    imdbID: data.imdbID,
+                }
+                const newMovies = [...this.state.movies]
+                newMovies.push(objForPush)
+                this.setState({movies: newMovies})
+            })
+        })
+    }
+
+    componentDidMount() {  
+        this.loadFilms() 
+    }
+
+    render() {
+        // console.log(this.state.movies)
+        return (
+            <div className="list-page">
+                <h1 className="list-page__title">{this.state.title}</h1>
+                <ul>
+                    {this.state.movies.map((item) => {
+                        return (
+                            <li key={item.imdbID}>
+                                <a href={`https://www.imdb.com/title/${item.imdbID}`} target="_blank">{item.Title} ({item.Year})</a>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        );
+    }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps (state) {
     return {
-      listArr: state.listArr,
-      id: state.id,
-    };
-  };
-  
-  const mapDispatchToProps = (dispatch) => ({
-    doList: (data) => dispatch(doList(data)),
-  });
+        id: state.id
+    }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage);
+export default connect(mapStateToProps)(ListPage);
