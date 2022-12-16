@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './ListPage.css';
-import store from '../../redux/store';
 import {connect} from 'react-redux'
 
 class ListPage extends Component {
@@ -10,9 +9,9 @@ class ListPage extends Component {
         title: ""
     }
 
-    loadFilms = async () => {
-        const res = await fetch(`https://acb-api.algoritmika.org/api/movies/list/${this.props.id}`)
-        const {movies, title} = await res.json()
+    loadFilms = () => {
+        const res = fetch(`https://acb-api.algoritmika.org/api/movies/list/${this.props.id}`)
+        const {movies, title} = res.json()
         this.setState({title})
         movies.forEach(item => {
             fetch(`http://www.omdbapi.com/?i=${item}&apikey=a6408ff1`)
@@ -29,13 +28,10 @@ class ListPage extends Component {
             })
         })
     }
-
     componentDidMount() {  
         this.loadFilms() 
     }
-
     render() {
-        // console.log(this.state.movies)
         return (
             <div className="list-page">
                 <h1 className="list-page__title">{this.state.title}</h1>
@@ -43,7 +39,8 @@ class ListPage extends Component {
                     {this.state.movies.map((item) => {
                         return (
                             <li key={item.imdbID}>
-                                <a href={`https://www.imdb.com/title/${item.imdbID}`} target="_blank">{item.Title} ({item.Year})</a>
+                                <a href={`https://www.imdb.com/title/${item.imdbID}`}
+                                target="_blank">{item.Title} ({item.Year})</a>
                             </li>
                         );
                     })}

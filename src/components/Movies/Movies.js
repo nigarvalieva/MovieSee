@@ -13,7 +13,6 @@ class Movies extends Component {
             const storeState = store.getState();
             const { movies } = storeState;
             this.setState({ movies });
-            console.log(movies);
         })
     }
 

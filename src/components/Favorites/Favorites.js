@@ -20,6 +20,7 @@ class Favorites extends Component {
     }
 
     createList = () => {
+        if (document.querySelectorAll('li').length!=0 && this.state.title!=''){ 
         const ids = this.state.fav.map(item => item.imdbID);
         fetch('https://acb-api.algoritmika.org/api/movies/list', {
             method: 'POST',
@@ -32,6 +33,7 @@ class Favorites extends Component {
             .then(data => {
                 store.dispatch(addList(data.id));
             })
+        }
     }
 
     listName = (event) => {
@@ -41,12 +43,15 @@ class Favorites extends Component {
     deleteItem = (index) => {
         store.dispatch(deleteItem(index));
     }
-
+    onChange = () => {
+        if (document.querySelectorAll('li').length!=0 && this.state.title!='')
+        document.querySelector('.favorites__save_dis').style.cursor="pointer"
+    }
     render() {
         return (
             <div className="favorites">
-                <input value={this.state.title} placeholder="Новый список" className="favorites__name" onChange={event => this.listName(event)} />
-                <ul className="favorites__list">
+                <input value={this.state.title} placeholder="Новый список" className="favorites__name" onChange={event => {this.listName(event); this.onChange()}} />
+                <ul className="favorites__list" onChange={this.onChange()}>
                     {this.state.fav.map((item, index) => {
                         return (
                             <div className='fav-item'>
@@ -59,7 +64,9 @@ class Favorites extends Component {
                             </div>);
                     })}
                 </ul>
-                <button type="button" className="favorites__save" onClick={this.createList}>Сохранить список</button>
+                <button type="button" className={"favorites__save_dis"} onClick={this.createList}
+                 disabled={document.querySelector('li')==0 && this.state.title==''?true:false}>
+                    Сохранить список</button>
                 <hr />
                 {this.state.id
                     ? <Link target='_blank' to="/list/:id">Список</Link>

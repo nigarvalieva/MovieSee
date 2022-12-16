@@ -39,7 +39,6 @@ function reducer(state = initialState, action) {
             };
         case LIST:
             const { id } = action.payload
-            console.log(id)
             return { ...state, id: id }
         case DELETE_ITEM:
             const index = action.payload.index;
